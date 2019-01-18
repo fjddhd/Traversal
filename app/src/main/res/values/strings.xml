@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Traversal</string>
+    <string name="MainActivity">二叉树的遍历</string>
 </resources>

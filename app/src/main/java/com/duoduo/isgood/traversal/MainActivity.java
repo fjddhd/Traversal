@@ -2,12 +2,10 @@ package com.duoduo.isgood.traversal;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -36,48 +34,51 @@ public class MainActivity extends AppCompatActivity {
     StringBuffer sb1=new StringBuffer();
     StringBuffer sb2=new StringBuffer();
     StringBuffer sb3=new StringBuffer();
+    private TextView tv_result;
+    int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn1 = findViewById(R.id.btn1);
-        btn2 = findViewById(R.id.btn2);
-        btn3 = findViewById(R.id.btn3);
+        FVBid();
+        
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sb1=new StringBuffer();
                 Init();
                 Xianxu(alNode.get(0));
-                TextView tv_result=findViewById(R.id.result);
-                tv_result.setText("");
-                tv_result.setText(sb1);
+                tv_result.clearComposingText();
+                tv_result.setText("前序排序是 "+sb1);
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sb2=new StringBuffer();
                 Init();
                 Zhongxu(alNode.get(0));
-                TextView tv_result=findViewById(R.id.result);
-                tv_result.setText("");
-                tv_result.setText(sb2);
+                tv_result.setText("中序排序是 "+sb2+"term: "+count);
             }
         });
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sb3=new StringBuffer();
                 Init();
                 Houxu(alNode.get(0));
-                TextView tv_result=findViewById(R.id.result);
-                tv_result.setText("");
-                tv_result.setText(sb3);
+                tv_result.clearComposingText();
+                tv_result.setText("后序排序是 "+sb3);
             }
         });
 
     }
 
-    public void Init(){
+    public void FVBid(){
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
         root = findViewById(R.id.root);
         et11 = findViewById(R.id.ed11);
         et12 = findViewById(R.id.ed12);
@@ -93,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
         et36 = findViewById(R.id.ed36);
         et37 = findViewById(R.id.ed37);
         et38 = findViewById(R.id.ed38);
+        tv_result = findViewById(R.id.result);
+    }
+    public void Init(){//获取节点框内信息组合成Node节点的树结构
+        count++;
         al = new ArrayList<>();
         alNode = new ArrayList<>();
         al.add(root.getText().toString());
@@ -111,7 +116,11 @@ public class MainActivity extends AppCompatActivity {
         al.add(et37.getText().toString());
         al.add(et38.getText().toString());
         for (int i=0;i<al.size();++i){
-            alNode.add(new Node(al.get(i)));
+            if (al.get(i)==null){
+                alNode.add(null);
+            }else{
+                alNode.add(new Node(al.get(i)));
+            }
         }
         if (alNode.get(0)!=null){
             alNode.get(0).left=alNode.get(1);
