@@ -1,15 +1,15 @@
 package com.duoduo.isgood.traversal;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity{
 
     private Button btn1;
     private Button btn2;
@@ -35,13 +35,13 @@ public class MainActivity extends AppCompatActivity {
     StringBuffer sb2=new StringBuffer();
     StringBuffer sb3=new StringBuffer();
     private TextView tv_result;
-    int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.tree_layout);
         FVBid();
+        InitToolbar(R.id.tool_bar_tree,R.id.drawer_layout_tree,R.id.navigation_tree);
         
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 sb2=new StringBuffer();
                 Init();
                 Zhongxu(alNode.get(0));
-                tv_result.setText("中序排序是 "+sb2+"term: "+count);
+                tv_result.setText("中序排序是 "+sb2);
             }
         });
         btn3.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
         et38 = findViewById(R.id.ed38);
         tv_result = findViewById(R.id.result);
     }
+
     public void Init(){//获取节点框内信息组合成Node节点的树结构
-        count++;
+//        count++;
         al = new ArrayList<>();
         alNode = new ArrayList<>();
         al.add(root.getText().toString());
