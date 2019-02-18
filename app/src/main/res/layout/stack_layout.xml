@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="请依次输入的入栈序列"/>
+                android:text="请输入入栈的顺序"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="请依次输入需验证的的出栈序列"/>
+                android:text="请输入需验证的可能出栈结果"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

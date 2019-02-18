@@ -1,19 +1,15 @@
 package com.duoduo.isgood.traversal;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class StackActivity extends BaseActivity{
 
@@ -33,15 +29,34 @@ public class StackActivity extends BaseActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int[] stackSequence=convert(edpush.getText().toString());
-                int[] needToCheck=convert(edpop.getText().toString());
+                String a=edpush.getText().toString();
+                String p=edpop.getText().toString();
+                int[] stackSequence= convertToArray(edpush.getText().toString());
+                int[] needToCheck= convertToArray(edpop.getText().toString());
                 boolean valid=validateStackSequences(stackSequence,needToCheck);
                 if (stackSequence.length!=needToCheck.length){
                     tv.setText("输入错误，进出栈序列长度不相等！");
                 }
-                else {
-
+                else if (valid==true){
+                    tv.setText("该出栈序列可由输入栈弹出");
                 }
+                else if (valid==false){
+                    tv.setText("该出栈序列不可由输入栈弹出！");
+                }
+                //延时8秒清空结果
+                Timer timer=new Timer();
+                TimerTask timertask=new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tv.setText("");
+                            }
+                        });
+                    }
+                };
+                timer.schedule(timertask,8000);
             }
         });
 
@@ -53,20 +68,22 @@ public class StackActivity extends BaseActivity{
         tv = findViewById(R.id.result_stack);
     }
 
-    public int[] convert(String string){
-        String pushText=edpush.getText().toString();
+    public int[] convertToArray(String string){
         int count=0;
-        for (int i=0;i<pushText.length();++i){
-            if (pushText.charAt(i)>=0 && pushText.charAt(i)<=9){
+        for (int i=0;i<string.length();++i){
+            if (string.charAt(i)>='0' && string.charAt(i)<='9'){
                 count++;
             }
         }
         int[] needToReturn=new int[count];
         count=0;
-        for (int i=0;i<pushText.length();++i){
-            if (pushText.charAt(i)>=0 && pushText.charAt(i)<=9){
-                needToReturn[count]=pushText.charAt(i)-'0';
+        for (int i=0;i<string.length();++i){
+            if (string.charAt(i)>='0' && string.charAt(i)<='9'){
+                needToReturn[count]=(string.charAt(i)-'0');
                 count++;
+                if (count==needToReturn.length){
+                    break;
+                }
             }
         }
         return needToReturn;
@@ -74,6 +91,9 @@ public class StackActivity extends BaseActivity{
 
 
     public boolean validateStackSequences(int[] pushed, int[] popped) {
+        if (pushed.length!=popped.length){
+            return false;
+        }
         int N = pushed.length;
         Stack<Integer> stack = new Stack();
 
