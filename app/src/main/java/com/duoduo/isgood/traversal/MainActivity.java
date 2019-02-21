@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tree_layout);
         FVBid();
-        InitToolbar(R.id.tool_bar_tree,R.id.drawer_layout_tree,R.id.navigation_tree);
+        InitToolbar(R.id.tool_bar_tree,R.id.drawer_layout_tree,R.id.navigation_tree,"二叉树遍历");
         
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity{
         al.add(et37.getText().toString());
         al.add(et38.getText().toString());
         for (int i=0;i<al.size();++i){
-            if (al.get(i)==null){
+            if (al.get(i).equals("")){//注意字符串比较
                 alNode.add(null);
             }else{
                 alNode.add(new Node(al.get(i)));

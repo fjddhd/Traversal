@@ -3,9 +3,13 @@
     <item android:title="二叉树的遍历"
         android:id="@+id/menu_tree">
 
-</item>
+    </item>
     <item android:title="验证栈序列"
         android:id="@+id/menu_stack">
+
+    </item>
+    <item android:title="快排轮次显示"
+        android:id="@+id/menu_quicksort">
 
     </item>
 

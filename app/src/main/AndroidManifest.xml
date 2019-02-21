@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StackActivity"/>
+        <activity android:name=".QuickSortActivity"/>
 
     </application>
 

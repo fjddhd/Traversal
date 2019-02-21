@@ -24,13 +24,13 @@ public class StackActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stack_layout);
         FVBid();
-        InitToolbar(R.id.tool_bar_stack,R.id.drawer_layout_stack,R.id.navigation_stack);
+        InitToolbar(R.id.tool_bar_stack,R.id.drawer_layout_stack,R.id.navigation_stack,"验证栈序列");
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String a=edpush.getText().toString();
-                String p=edpop.getText().toString();
+//                String a=edpush.getText().toString();//测试用
+//                String p=edpop.getText().toString();//测试用
                 int[] stackSequence= convertToArray(edpush.getText().toString());
                 int[] needToCheck= convertToArray(edpop.getText().toString());
                 boolean valid=validateStackSequences(stackSequence,needToCheck);

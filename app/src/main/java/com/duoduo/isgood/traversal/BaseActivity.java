@@ -19,9 +19,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
 
-    public void InitToolbar(int toolbarId,int drawerLayoutId,int NavagationViewId){
+    public void InitToolbar(int toolbarId,int drawerLayoutId,int NavagationViewId,String toolbarTitle){
         mToolbar = findViewById(toolbarId);//视活动而定
-        mToolbar.setTitle("二叉树遍历");//customize the title,个性化设置title
+        mToolbar.setTitle(toolbarTitle);//customize the title,个性化设置title
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));//设置title颜色
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//show back button and make it enabled
@@ -62,11 +62,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_tree:{
                 Intent intent=new Intent(this,MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0,0);//去掉活动切换动画
                 break;
             }
             case R.id.menu_stack:{
                 Intent intent=new Intent(this,StackActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0,0);
+                break;
+            }
+            case R.id.menu_quicksort:{
+                Intent intent=new Intent(this,QuickSortActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
                 break;
             }
 
