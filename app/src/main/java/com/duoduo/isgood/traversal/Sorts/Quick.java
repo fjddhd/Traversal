@@ -1,10 +1,15 @@
 package com.duoduo.isgood.traversal.Sorts;
 
 public class Quick extends ExamOfSort {
-    public static void sort(Comparable[] a){
+    public StringBuilder sb;
+    public Quick(StringBuilder stringbuilder) {
+        sb=stringbuilder;
+    }
+
+    public void sort(Comparable[] a){
         sort(a,0,a.length-1);
     }
-    public static void sort(Comparable[] a,int lo,int hi){
+    public void sort(Comparable[] a,int lo,int hi){
         if (hi<=lo)
             return;
         int j=partition(a,lo,hi);
@@ -18,7 +23,7 @@ public class Quick extends ExamOfSort {
     * 再从数组右端开始向左扫描直到找到一个小于等于轴的元素，此时交换这两个元素的位置
     * 当两个指针相遇，把轴元素和左数组最右侧元素（a[j]）交换并返回j即可
     * */
-    private static int partition(Comparable[] a, int lo, int hi) {
+    private int partition(Comparable[] a, int lo, int hi) {
         int i=lo,j=hi+1;
         Comparable v=a[lo];//切分元素，轴
         while(true){
@@ -34,10 +39,11 @@ public class Quick extends ExamOfSort {
         }
         exch(a,lo,j);//轴与j位置元素交换
 
-        for (int k=lo;k<=hi;++k) {//测试每趟的结果，大数组输入最好注释掉
-            System.out.print(a[k]+" ");
+        for (int k=0;k<a.length;++k) {//测试每趟的结果，大数组输入最好注释掉
+            sb.append(a[k]);
+            sb.append(" ");
         }
-        System.out.println("");
+        sb.append("\n");
 
         return j;//返回轴所在位置
     }

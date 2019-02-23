@@ -2,7 +2,7 @@ package com.duoduo.isgood.traversal.Sorts;
 
 public class Merge extends ExamOfSort {
     private static Comparable[] aux;//归并所需要的辅助数组
-    public static void sort(Comparable[] a){//自顶向下归并排序
+    public void sort(Comparable[] a){//自顶向下归并排序
         aux=new Comparable[a.length];
         sort(a,0,a.length-1);
     }

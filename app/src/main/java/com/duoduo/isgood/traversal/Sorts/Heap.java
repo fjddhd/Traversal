@@ -20,7 +20,7 @@ public class Heap extends  ExamOfSort {//注意：数组下标0不使用
         }
     }
 
-    public static void sort(Comparable[] a){
+    public void sort(Comparable[] a){
         int N=a.length-1;//此处跟书中不一样，因为测试的时候在0号下标处加上了一个0
         for (int k=N/2;k>=1;k--){//构造堆,从N/2开始依次下沉
             sink(a,k,N);
