@@ -38,7 +38,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="以逗号分隔，如3,2,5,3或者b,c,d"
+                android:hint="用统一的单个分隔符分隔，如3,2,5,3或者b,c,d"
                 android:layout_marginBottom="20dp"
                 android:id="@+id/ed_needtosort_quicksort"/>
             <Button
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:textColor="#969696"
-                android:text="1. 可以排序整数数字序列，字母序列。\n2. 请不要使用字母数字混合序列输入。\n3.字母序列元素目前仅支持单字母元素 \n4.字母序列按照字母顺序排序并且不区分大小写，返回结果一律以大写形式返回。"
+                android:text="1. 可以排序整数数字序列，字母序列。\n2. 请不要使用字母数字混合序列输入。\n3. 字母序列元素目前仅支持单字母元素 \n4. 字母序列按照字母顺序排序并且不区分大小写，返回结果一律以大写形式返回。\n5. 分隔符请使用非字母非数字的单字符，每次输入请使用统一的分隔符，本页面会自动识别分隔符"
                 android:id="@+id/illustrate_quicksort"/>
             <TextView
                 android:layout_width="wrap_content"

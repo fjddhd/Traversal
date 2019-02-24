@@ -39,11 +39,19 @@ public class Quick extends ExamOfSort {
         }
         exch(a,lo,j);//轴与j位置元素交换
 
-        for (int k=0;k<a.length;++k) {//测试每趟的结果，大数组输入最好注释掉
-            sb.append(a[k]);
-            sb.append(" ");
+        for (int k=0;k<a.length;++k) {
+            if (k==j){//轴标红色，使用这个条件是因为防止因重复元素而多标
+                sb.append("<font color='#ff0000'>");
+                sb.append(a[k]);
+                sb.append("</font>");
+                sb.append(" ");
+            }
+            else {
+                sb.append(a[k]);
+                sb.append(" ");
+            }
         }
-        sb.append("\n");
+        sb.append("<br>");
 
         return j;//返回轴所在位置
     }

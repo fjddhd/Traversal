@@ -2,12 +2,16 @@ package com.duoduo.isgood.traversal;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.duoduo.isgood.traversal.Sorts.Quick;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class QuickSortActivity extends BaseActivity {
 
@@ -27,19 +31,46 @@ public class QuickSortActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 String inputString=edinput.getText().toString();
+                char inputRegex='.';//默认分隔符为英文句号
+                for (int i=0;i<inputString.length();++i){//寻找第一个非字母数字字符为分隔符,保存到inputRegex变量中去
+                    char temp=inputString.charAt(i);
+                    if (!(temp>='0' && temp<='9') &&
+                            !(temp>='a' && temp<='z') &&
+                            !(temp>='A' && temp<='Z')){
+                        inputRegex=temp;
+                        break;
+                    }
+                }
                 StringBuilder output=new StringBuilder();
                 Quick quick=new Quick(output);
                 if (inputString.charAt(0)>='0' && inputString.charAt(0)<='9'){
-                    Integer[] input=addressIntInput(inputString);
+                    Integer[] input=addressIntInput(inputString,inputRegex);
                     quick.sort(input);
                 }else if (inputString.charAt(0)>='a' && inputString.charAt(0)<='z' ||inputString.charAt(0)>='A' && inputString.charAt(0)<='Z'){
-                    Character[] input=addressCharacterInput(inputString);
+                    Character[] input=addressCharacterInput(inputString,inputRegex);
                     quick.sort(input);
                 }
 
                 tvIllustrate.setVisibility(View.GONE);
-                tvResult.setText(quick.sb.toString());
+                tvResult.setText(Html.fromHtml(quick.sb.toString()));//支持html的文本
                 tvResult.setVisibility(View.VISIBLE);
+
+                //延时20秒清空结果
+                Timer timer=new Timer();
+                TimerTask timertask=new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                tvResult.setText("");
+                                tvResult.setVisibility(View.GONE);
+                                tvIllustrate.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                };
+                timer.schedule(timertask,20000);
 
 
             }
@@ -56,16 +87,16 @@ public class QuickSortActivity extends BaseActivity {
      * 由于使用了下面的split方法
      * 所以输入要限定分隔符号
      * */
-    public Integer[] addressIntInput(String needToAddress){
-        String[] splittedInput=split(needToAddress,'.');
+    public Integer[] addressIntInput(String needToAddress,char r){
+        String[] splittedInput=split(needToAddress,r);
         Integer[] res=new Integer[splittedInput.length];
         for (int i=0;i<splittedInput.length;++i){
             res[i]=Integer.valueOf(splittedInput[i]);
         }
         return res;
     }
-    public Character[] addressCharacterInput(String needToAddress){//这里方便处理但是限定了单字母字符的输入
-        String[] splittedInput=split(needToAddress,'.');
+    public Character[] addressCharacterInput(String needToAddress,char r){//这里方便处理但是限定了单字母字符的输入
+        String[] splittedInput=split(needToAddress,r);
         Character[] res=new Character[splittedInput.length];
         for (int i=0;i<splittedInput.length;++i){
             if (splittedInput[i].charAt(0)>='a' && splittedInput[i].charAt(0)<='z'){
