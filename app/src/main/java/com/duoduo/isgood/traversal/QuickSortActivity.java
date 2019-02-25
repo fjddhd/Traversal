@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.duoduo.isgood.traversal.Sorts.Quick;
 
@@ -32,15 +33,35 @@ public class QuickSortActivity extends BaseActivity {
             public void onClick(View view) {
                 String inputString=edinput.getText().toString();
                 char inputRegex='.';//默认分隔符为英文句号
-                for (int i=0;i<inputString.length();++i){//寻找第一个非字母数字字符为分隔符,保存到inputRegex变量中去
+                int countInt=0;//给每位int计数（防溢出操作）
+                boolean findRegex=false;
+                for (int i=0;i<inputString.length();++i){//寻找最后一个非字母数字字符为分隔符,保存到inputRegex变量中去
                     char temp=inputString.charAt(i);
                     if (!(temp>='0' && temp<='9') &&
                             !(temp>='a' && temp<='z') &&
                             !(temp>='A' && temp<='Z')){
+                        if (findRegex==true){
+                            if (inputRegex!=temp){
+                                Toast.makeText(QuickSortActivity.this,"请输入统一的分隔符",Toast.LENGTH_LONG).show();//分隔符不一致提示
+                                return;//结束本次点击事件
+                            }
+                        }
                         inputRegex=temp;
-                        break;
+                        findRegex=true;
+                        countInt=0;
+                    }else {
+                        countInt++;
+                        if (countInt>=10){
+                            Toast.makeText(QuickSortActivity.this,"请不要输入过大的数字",Toast.LENGTH_LONG).show();//数字溢出提示
+                            return;//结束本次点击事件
+                        }
                     }
                 }
+                if (findRegex==false){
+                    Toast.makeText(QuickSortActivity.this,"没有必要给单个元素的数组进行排序",Toast.LENGTH_LONG).show();//数字溢出提示
+                    return;//结束本次点击事件
+                }
+
                 StringBuilder output=new StringBuilder();
                 Quick quick=new Quick(output);
                 if (inputString.charAt(0)>='0' && inputString.charAt(0)<='9'){
@@ -84,8 +105,7 @@ public class QuickSortActivity extends BaseActivity {
         tvResult = findViewById(R.id.result_quicksort);
     }
     /**
-     * 由于使用了下面的split方法
-     * 所以输入要限定分隔符号
+     *这两个方法依赖下面的split方法
      * */
     public Integer[] addressIntInput(String needToAddress,char r){
         String[] splittedInput=split(needToAddress,r);
@@ -111,6 +131,9 @@ public class QuickSortActivity extends BaseActivity {
 
 
 
+    /**
+     * 传入字符串和char类型的单个分隔符以分割成字符串数组
+     * */
     public String[] split(String needToSplit,char regex){
         int count=0;//符号的个数
         for (int i=0;i<needToSplit.length();++i){
