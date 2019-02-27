@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Stack;
 import java.util.Timer;
@@ -29,10 +30,60 @@ public class StackActivity extends BaseActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String a=edpush.getText().toString();//测试用
-//                String p=edpop.getText().toString();//测试用
+                String stackSequenceString=edpush.getText().toString();//测试用
+                String needToCheckString=edpop.getText().toString();//测试用
                 int[] stackSequence= convertToArray(edpush.getText().toString());
                 int[] needToCheck= convertToArray(edpop.getText().toString());
+                char inputRegex='.';//默认分隔符为英文句号
+                int countInt=0;//给每位int计数（防溢出操作）
+                boolean findRegex=false;
+                for (int i=0;i<stackSequenceString.length();++i){//寻找最后一个非字母数字字符为分隔符,保存到inputRegex变量中去
+                    char temp=stackSequenceString.charAt(i);
+                    if (!(temp>='0' && temp<='9') &&
+                            !(temp>='a' && temp<='z') &&
+                            !(temp>='A' && temp<='Z')){
+                        if (findRegex==true){
+                            if (inputRegex!=temp){
+                                Toast.makeText(StackActivity.this,"请输入统一的分隔符",Toast.LENGTH_LONG).show();//分隔符不一致提示
+                                return;//结束本次点击事件
+                            }
+                        }
+                        inputRegex=temp;
+                        findRegex=true;
+                        countInt=0;
+                    }else {
+                        countInt++;
+                        if (countInt>=10){
+                            Toast.makeText(StackActivity.this,"请不要输入过大的数字",Toast.LENGTH_LONG).show();//数字溢出提示
+                            return;//结束本次点击事件
+                        }
+                    }
+                }
+                inputRegex='.';countInt=0;findRegex=false;
+                for (int i=0;i<needToCheckString.length();++i){//寻找最后一个非字母数字字符为分隔符,保存到inputRegex变量中去
+                    char temp=needToCheckString.charAt(i);
+                    if (!(temp>='0' && temp<='9') &&
+                            !(temp>='a' && temp<='z') &&
+                            !(temp>='A' && temp<='Z')){
+                        if (findRegex==true){
+                            if (inputRegex!=temp){
+                                Toast.makeText(StackActivity.this,"请输入统一的分隔符",Toast.LENGTH_LONG).show();//分隔符不一致提示
+                                return;//结束本次点击事件
+                            }
+                        }
+                        inputRegex=temp;
+                        findRegex=true;
+                        countInt=0;
+                    }else {
+                        countInt++;
+                        if (countInt>=10){
+                            Toast.makeText(StackActivity.this,"请不要输入过大的数字",Toast.LENGTH_LONG).show();//数字溢出提示
+                            return;//结束本次点击事件
+                        }
+                    }
+                }
+
+
                 boolean valid=validateStackSequences(stackSequence,needToCheck);
                 if (stackSequence.length!=needToCheck.length){
                     tv.setText("输入错误，进出栈序列长度不相等！");

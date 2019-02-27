@@ -12,5 +12,10 @@
         android:id="@+id/menu_quicksort">
 
     </item>
+    <item android:title="堆排轮次显示"
+          android:id="@+id/menu_heap"
+        >
+
+    </item>
 
 </menu>

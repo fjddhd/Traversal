@@ -5,8 +5,6 @@ import java.util.Arrays;
 
 public class ExamOfSort {
 
-
-
     public void sort(Comparable[] a){
 
     }

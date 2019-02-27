@@ -38,7 +38,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="以逗号分隔，如3,2,5,3"
+                android:hint="以统一的单个分隔符分隔，如3,2,5,3"
                 android:layout_marginBottom="20dp"
                 android:id="@+id/ed_push_stack"/>
             <TextView
@@ -49,7 +49,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="以逗号分隔，如3,2,5,3"
+                android:hint="以统一的单个分隔符分隔，如3,2,5,3"
                 android:layout_marginBottom="30dp"
                 android:id="@+id/ed_pop_stack"/>
             <Button
