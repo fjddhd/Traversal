@@ -77,6 +77,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 overridePendingTransition(0,0);
                 break;
             }
+            case R.id.menu_heap:{
+                Intent intent=new Intent(this,HeapActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                break;
+            }
 
 
         }

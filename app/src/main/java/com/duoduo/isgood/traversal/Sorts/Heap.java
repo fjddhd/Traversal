@@ -1,7 +1,11 @@
 package com.duoduo.isgood.traversal.Sorts;
 
 public class Heap extends  ExamOfSort {//注意：数组下标0不使用
+    public StringBuilder sb;
 
+    public Heap(StringBuilder stringbuilder){
+        sb=stringbuilder;
+    }
     /**
      * 大顶堆，输出非递减序列，无重复则递增
      * */
@@ -26,20 +30,28 @@ public class Heap extends  ExamOfSort {//注意：数组下标0不使用
             sink(a,k,N);
         }
 
-        System.out.println("构造后堆的序列");
+        sb.append("建成堆顺序如下：");
+        sb.append("<br>");
         for (int i=0;i<a.length;++i){
-            System.out.print(a[i]+" ");
+            sb.append(a[i]+" ");
         }
+        sb.append("<br>");
 
+        sb.append("堆排序各轮次结果如下：");
+        sb.append("<br>");
         //此时堆有序（每个节点大于等于其子节点，子节点间未必有序）
         while (N>1){//修复堆，把堆底元素换到堆顶一依次下沉
             exch(a,1,N--);//每次sink保证栈顶在剩余序列中最大，所以把它换到合适的位置
             sink(a,1,N);
+            for (int i=0;i<a.length;++i){
+                sb.append(a[i]+" ");
+            }
+            sb.append("<br>");
         }
     }
 
     /**
-     * 小顶堆，输出非递增序列，无重复则递减
+     * 小顶堆，输出非递增序列，无重复则递减------------注意：本程序暂时不用---------
      * */
     private static void sinkl(Comparable[] a,int k,int N){//下沉（自上而下调整），每N次下沉只需少于2N次比较和少于N次交换
         while(2*k<=N){
