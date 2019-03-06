@@ -1,7 +1,10 @@
 package com.duoduo.isgood.traversal;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -9,8 +12,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -19,7 +28,23 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
 
-    public void InitToolbar(int toolbarId,int drawerLayoutId,int NavagationViewId,String toolbarTitle){
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // 允许使用transitions
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        //transitions设置
+        Explode explode = new Explode();
+        explode.setDuration(300);
+        Slide slide = new Slide();
+        slide.setDuration(300);
+        slide.setSlideEdge(Gravity.END);
+        getWindow().setEnterTransition(slide);
+        getWindow().setReturnTransition(explode);
+
+    }
+
+    public void InitToolbar(int toolbarId, int drawerLayoutId, int NavagationViewId, String toolbarTitle){
         mToolbar = findViewById(toolbarId);//视活动而定
         mToolbar.setTitle(toolbarTitle);//customize the title,个性化设置title
         mToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));//设置title颜色
@@ -48,7 +73,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_navigation,menu);
+        getMenuInflater().inflate(R.menu.menu_navigation,menu);//启用菜单
         return false;//设为true后，toolbar右边会有开启menu的三点图形
     }
     /**
@@ -61,26 +86,27 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         switch (id){
             case R.id.menu_tree:{
                 Intent intent=new Intent(this,MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(0,0);//去掉活动切换动画
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this);
+                startActivity(intent, transitionActivityOptions.toBundle());
+//                overridePendingTransition(0,0);//去掉活动切换动画
                 break;
             }
             case R.id.menu_stack:{
                 Intent intent=new Intent(this,StackActivity.class);
-                startActivity(intent);
-                overridePendingTransition(0,0);
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this);
+                startActivity(intent, transitionActivityOptions.toBundle());
                 break;
             }
             case R.id.menu_quicksort:{
                 Intent intent=new Intent(this,QuickSortActivity.class);
-                startActivity(intent);
-                overridePendingTransition(0,0);
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this);
+                startActivity(intent, transitionActivityOptions.toBundle());
                 break;
             }
             case R.id.menu_heap:{
                 Intent intent=new Intent(this,HeapActivity.class);
-                startActivity(intent);
-                overridePendingTransition(0,0);
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this);
+                startActivity(intent, transitionActivityOptions.toBundle());
                 break;
             }
 
@@ -99,4 +125,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
     }
+
+
 }
