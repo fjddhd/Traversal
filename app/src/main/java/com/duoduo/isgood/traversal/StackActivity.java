@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -84,7 +87,7 @@ public class StackActivity extends BaseActivity{
                 }
 
 
-                boolean valid=validateStackSequences(stackSequence,needToCheck);
+                boolean valid=validateStackSequences2(stackSequence,needToCheck);
                 if (stackSequence.length!=needToCheck.length){
                     tv.setText("输入错误，进出栈序列长度不相等！");
                 }
@@ -158,6 +161,32 @@ public class StackActivity extends BaseActivity{
         }
 
         return j == N;
+    }
+
+    public boolean validateStackSequences2(int[] pushed, int[] popped) {//去重版
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = pushed.length - 1; i >= 0; --i) {
+            List<Integer> indexs = map.getOrDefault(pushed[i], new ArrayList<Integer>());
+            indexs.add(i);
+            map.put(pushed[i], indexs);
+        }
+        boolean[] visit = new boolean[pushed.length];
+        int topIndex = -1;
+        for (Integer num : popped) {
+            List<Integer> indexs = map.get(num);
+            for (Integer index : indexs) {
+                if (visit[index] == true) continue;
+                if (index < topIndex) return false;
+                else {
+                    int newTop = index - 1;
+                    while (newTop > - 1 && visit[newTop] == true) newTop--;
+                    topIndex = newTop;
+                }
+                visit[index] = true;
+                break;
+            }
+        }
+        return true;
     }
 
 
